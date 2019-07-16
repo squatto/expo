@@ -5,11 +5,16 @@ export const nativeAppVersion = ExpoApplication ? ExpoApplication.nativeAppVersi
 export const nativeBuildVersion = ExpoApplication ? ExpoApplication.nativeBuildVersion : null;
 export const applicationName = ExpoApplication ? ExpoApplication.applicationName : null;
 export const bundleId = ExpoApplication ? ExpoApplication.bundleId : null;
-export const installReferrer = ExpoApplication ? ExpoApplication.installReferrer : null;
+export let installReferrer;
+export let androidId;
 if(Platform.OS === 'ios'){
-  
+  androidId = null;
+  installReferrer = null;
 }
-export const androidId = ExpoApplication ? ExpoApplication.androidId : null;
+else{
+  androidId = ExpoApplication ? ExpoApplication.androidId : null;
+  installReferrer = ExpoApplication ? ExpoApplication.installReferrer : null;
+}
 
 export async function getIosIdForVendorAsync(): Promise<string> {
   if (!ExpoApplication.getIosIdForVendorAsync) {
