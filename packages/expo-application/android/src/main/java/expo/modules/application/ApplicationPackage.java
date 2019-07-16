@@ -14,9 +14,5 @@ public class ApplicationPackage extends BasePackage {
   public List<ExportedModule> createExportedModules(Context context) {
     return Collections.singletonList((ExportedModule) new ApplicationModule(context));
   }
-
-  @Override
-  public List<ViewManager> createViewManagers(Context context) {
-    return Collections.singletonList((ViewManager) new ApplicationViewManager());
-  }
 }
+
