@@ -74,7 +74,7 @@ await Application.getIosForVenderAsync().then(idfv => {
 });
 ```
 
-### `Application.getFirstInstallTimeAsync()`
+### `Application.getFirstInstallTimeAsync()` (Android only)
 
 Gets the first time the app was installed onto the device. Returned time is based on US English Locale (en_US). It is formatted: Month DD, YYYY.
 
