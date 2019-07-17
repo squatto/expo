@@ -69,8 +69,8 @@ A `Promise` that resolves to a `string` of the IDFV for the app.
 **Examples**
 
 ```js
-await Application.getIosForVenderAsync().then(idfv => {
-  //"FCDBD8EF-62FC-4ECB-B2F5-92C9E79AC7F9"
+await Application.getIosForVenderAsync().then((idfv) => {
+    //"FCDBD8EF-62FC-4ECB-B2F5-92C9E79AC7F9"
 });
 ```
 
@@ -85,12 +85,12 @@ Returns a `Promise` that resolves to a human-readable `string` that represents t
 **Examples**
 
 ```js
-await Application.getFirstInstallTimeAsync().then(firstInstallTime => {
-  // Jan 2, 2001
+await Application.getFirstInstallTimeAsync().then((firstInstallTime) => {
+    //
 });
 ```
 
-### `Application.getLastUpdateTimeAsync() (Android only)`
+### `Application.getLastUpdateTimeAsync()` (Android only)
 
 Gets the last time the app was updated from the App store or Play Store.
 
@@ -101,7 +101,7 @@ Returns a `Promise` that resolves to a human-readable `string` that represents t
 **Examples**
 
 ```js
-await Application.getLastUpdateTimeAsync().then(lastUpdateTime => {
-  //
+await Application.getLastUpdateTimeAsync().then((lastUpdateTime) => {
+    //
 });
 ```
