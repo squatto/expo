@@ -32,7 +32,6 @@ public class ApplicationModule extends ExportedModule implements RegistryLifecyc
   private ActivityProvider mActivityProvider;
   private Activity mActivity;
 
-
   public ApplicationModule(Context context) {
     super(context);
     mContext = context;
@@ -97,7 +96,7 @@ public class ApplicationModule extends ExportedModule implements RegistryLifecyc
     }
 
     constants.put("androidId", Settings.Secure.getString(mContext.getContentResolver(), Settings.Secure.ANDROID_ID));
-    constants.put("installReferrer", "here i am");
+    constants.put("installReferrer", getInstallReferrer());
 
     return constants;
   }
