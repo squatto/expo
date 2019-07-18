@@ -22,6 +22,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.unimodules.core.ModuleRegistry;
 import org.unimodules.core.arguments.MapArguments;
+import org.unimodules.core.interfaces.RegistryLifecycleListener;
 
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
@@ -47,7 +48,7 @@ import host.exp.exponent.notifications.presenters.NotificationPresenter;
 import host.exp.exponent.notifications.presenters.NotificationPresenterInterface;
 import host.exp.exponent.storage.ExponentSharedPreferences;
 
-public class NotificationsModule extends ReactContextBaseJavaModule implements MailboxInterface {
+public class NotificationsModule extends ReactContextBaseJavaModule implements RegistryLifecycleListener, MailboxInterface {
 
   private static final String TAG = NotificationsModule.class.getSimpleName();
 
@@ -313,6 +314,43 @@ public class NotificationsModule extends ReactContextBaseJavaModule implements M
     } catch (Exception e) {
       promise.reject(e);
     }
+  }
+
+  @ReactMethod
+  public void scheduleLocalNotificationWithChannel(final ReadableMap data, final ReadableMap options, final ReadableMap legacyChannelData, final Promise promise) {
+    if (legacyChannelData != null) {
+      String experienceId = mManifest.optString(ExponentManifest.MANIFEST_ID_KEY, null);
+      String channelId = data.getString("channelId");
+      if (channelId == null || experienceId == null) {
+        promise.reject("E_FAILED_PRESENTING_NOTIFICATION", "legacyChannelData was nonnull with no channelId or no experienceId");
+        return;
+      }
+      NotificationHelper.maybeCreateLegacyStoredChannel(
+          getReactApplicationContext(),
+          experienceId,
+          channelId,
+          legacyChannelData.toHashMap());
+    }
+
+    int notificationId = new Random().nextInt();
+
+    HashMap<String, Object> hashMap = data.toHashMap();
+
+    NotificationHelper.scheduleLocalNotification(
+        getReactApplicationContext(),
+        notificationId,
+        hashMap,
+        options.toHashMap(),
+        mManifest,
+        new NotificationHelper.Listener() {
+          public void onSuccess(int id) {
+            promise.resolve(id);
+          }
+
+          public void onFailure(Exception e) {
+            promise.reject(e);
+          }
+        });
   }
 
   public void onCreate(ModuleRegistry moduleRegistry) {

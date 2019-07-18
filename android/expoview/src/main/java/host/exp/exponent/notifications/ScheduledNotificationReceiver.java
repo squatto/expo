@@ -26,8 +26,9 @@ public class ScheduledNotificationReceiver extends BroadcastReceiver {
 
   public void onReceive(Context context, Intent intent) {
     Bundle bundle = intent.getExtras();
-    Bundle notification = bundle.getBundle(KernelConstants.NOTIFICATION_OBJECT_KEY);
+    HashMap details = (HashMap) bundle.getSerializable(KernelConstants.NOTIFICATION_OBJECT_KEY);
     int notificationId = bundle.getInt(KernelConstants.NOTIFICATION_ID_KEY, 0);
+    // TODO convert hashmap to bundle
 
     NotificationPresenterProvider.getNotificationPresenter().presentNotification(
         context.getApplicationContext(),
